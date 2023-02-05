@@ -19,9 +19,16 @@ public class App
         Session session = sessionFactory.getCurrentSession();
         try {
             session.beginTransaction();
-            Person person = session.get(Person.class, 1);
-            System.out.println(person.getName());
-            System.out.println(person.getAge());
+
+            Person person = session.get(Person.class, 2);
+
+            person.setName("new name");
+
+            session.delete(person);
+
+            Person newPerson = new Person("Some name", 60);
+            session.save(newPerson);
+
 
             session.getTransaction().commit();
         }finally {
