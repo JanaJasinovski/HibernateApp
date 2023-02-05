@@ -10,12 +10,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Actor")
 public class Actor {
     @Id
-    @Column(name = "id")
+    @Column(name = "actor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -81,5 +82,18 @@ public class Actor {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return id == actor.id && age == actor.age && Objects.equals(name, actor.name) && Objects.equals(movies, actor.movies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, movies);
     }
 }
