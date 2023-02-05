@@ -2,7 +2,10 @@ package org.example.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -11,6 +14,11 @@ public class Person {
 
     @Id
     @Column(name = "id")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "seq_generator_person")
+    @SequenceGenerator(name = "seq_generator_person",
+    sequenceName = "person_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "name")
@@ -22,8 +30,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, String name, int age) {
-        this.id = id;
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
